@@ -1,3 +1,8 @@
+![Screenshot](screenshot-1.png)
+![Screenshot](screenshot-2.png)
+![Screenshot](screenshot-3.png)
+![Screenshot](screenshot-4.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
