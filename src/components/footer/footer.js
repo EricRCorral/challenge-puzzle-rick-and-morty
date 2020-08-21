@@ -1,14 +1,16 @@
-import React from 'react'
+import React from "react";
 
 function Footer() {
+  const date = `${new Date().getDate()}/${
+    new Date().getMonth() + 1
+  }/${new Date().getFullYear()}`;
 
-    const date = `${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`
-
-    return (
-        <div className="footer">
-            <strong>ERIC CORRAL</strong><div className="right">{date}</div>
-        </div>
-    )
+  return (
+    <div className="footer">
+      <strong>ERIC CORRAL</strong>
+      <div className="right">{date}</div>
+    </div>
+  );
 }
 
-export default Footer
+export default Footer;

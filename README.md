@@ -1,3 +1,9 @@
+## Challenge Rick and Morty 
+
+### ¿Cómo se usa la app?
+
+En el buscador escriba el nombre de algún personaje, lugar o episodio, luego puede variar entre ellos con los filtros a su izquierda. Para borrar toda la búsqueda actual toque el icono en forma de ❌ arriba a la derecha. En caso de no haber resultados para su búsqueda se mostrará el mensaje "No results❌" Enjoy it! 🚀
+
 ![Screenshot](screenshot-1.png)
 ![Screenshot](screenshot-2.png)
 ![Screenshot](screenshot-3.png)

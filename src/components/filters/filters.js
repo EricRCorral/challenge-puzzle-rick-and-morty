@@ -1,48 +1,45 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
+import { setPageAction, setFilterAction } from "../../redux/queryDuck";
 
-function Filters(props) {
+function Filters({ filter, fetching, setFilterAction, setPageAction }) {
+  const radios = ["Characters", "Locations", "Episodes"];
 
-    const radios = [
-        'Characters',
-        'Locations',
-        'Episodes'
-    ]
+  function selectFilter(filterSelected) {
+    setPageAction(1, false);
+    setFilterAction(filterSelected);
+  }
 
-    // Los filtros funcionan con un indice el cual selecciona uno de los 3 querys del app.component
-    // Se coloca la pagina uno para prevenir posibles fallos de diferencias de paginas entre filtros
+  return (
+    <>
+      <h4>Filters</h4>
 
-    function selectFilter(i) {
-        props.setQueryIndex(i)
-        props.setPage(1)
-    }
+      <form>
+        {radios.map((name) => (
+          <p key={name}>
+            <label>
+              <input
+                checked={name.toLowerCase() === filter}
+                className="with-gap"
+                type="radio"
+                disabled={fetching}
+                onChange={() => selectFilter(name.toLowerCase())}
+              />
 
-    return (
-        <>
-
-            <h4>Filters</h4>
-
-            <form>
-
-                {radios.map((name, i) => (
-
-                    <p key={name}>
-
-                        <label>
-
-                            <input
-                                checked={i === props.queryIndex}
-                                className="with-gap"
-                                type="radio"
-                                onChange={() => selectFilter(i)} />
-
-                            <span>{name}</span>
-
-                        </label>
-                    </p>
-                ))}
-            </form>
-        </>
-    );
+              <span>{name}</span>
+            </label>
+          </p>
+        ))}
+      </form>
+    </>
+  );
 }
 
-export default Filters
+function mapState(state) {
+  return {
+    filter: state.filter,
+    fetching: state.fetching,
+  };
+}
+
+export default connect(mapState, { setPageAction, setFilterAction })(Filters);
