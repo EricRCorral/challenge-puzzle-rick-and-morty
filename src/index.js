@@ -5,8 +5,6 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import generateStore from "./redux/store";
 import "./index.css";
-import "./css/materialize.min.css";
-import "materialize-css";
 import App from "./App";
 
 let store = generateStore();
