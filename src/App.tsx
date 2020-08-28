@@ -1,8 +1,9 @@
 import React from "react";
 import { Cards, Filters, Footer, Search } from "./components/components";
 import { connect } from "react-redux";
+import { State } from "./interfaces/State";
 
-function App({ name }) {
+function App({ name }: State) {
   return (
     <>
       <div className="container">
@@ -29,7 +30,7 @@ function App({ name }) {
   );
 }
 
-function mapState(state) {
+function mapState(state: State) {
   return {
     name: state.name,
   };

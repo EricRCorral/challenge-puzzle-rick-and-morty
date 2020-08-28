@@ -4,8 +4,9 @@ import {
   queryEpisodes,
   queryLocations,
 } from "../apollo/queries";
+import { Action, State } from "../interfaces/Interfaces";
 
-let initialData = {
+let initialData: State = {
   name: "",
   page: 1,
   filter: "characters",
@@ -27,7 +28,7 @@ const SET_FILTER = "SET_FILTER";
 const SET_PAGE = "SET_PAGE";
 const SET_CURRENT_CARD = "SET_CURRENT_CARD";
 
-export default function reducer(state = initialData, action) {
+export default function reducer(state = initialData, action: Action) {
   switch (action.type) {
     case GET_DATA:
       return { ...state, fetching: true };
@@ -57,7 +58,7 @@ export default function reducer(state = initialData, action) {
   }
 }
 
-export let getDataAction = () => (dispatch, getState) => {
+export let getDataAction = () => (dispatch: Action, getState: { (): any }) => {
   let query =
     getState().filter === "characters"
       ? queryCharacters
@@ -87,7 +88,10 @@ export let getDataAction = () => (dispatch, getState) => {
     });
 };
 
-export let setNameAction = (searcherVal) => (dispatch, getState) => {
+export let setNameAction = (searcherVal: string) => (
+  dispatch: Action,
+  getState: { (): any }
+) => {
   dispatch({
     type: SET_NAME,
     payload: searcherVal,
@@ -95,15 +99,21 @@ export let setNameAction = (searcherVal) => (dispatch, getState) => {
   getDataAction()(dispatch, getState);
 };
 
-export let setFilterAction = (i) => (dispatch, getState) => {
+export let setFilterAction = (filter: string) => (
+  dispatch: Action,
+  getState: { (): any }
+) => {
   dispatch({
     type: SET_FILTER,
-    payload: i,
+    payload: filter,
   });
   getDataAction()(dispatch, getState);
 };
 
-export let setPageAction = (page, fromFilters) => (dispatch, getState) => {
+export let setPageAction = (page: number, fromFilters: boolean) => (
+  dispatch: Action,
+  getState: { (): any }
+) => {
   dispatch({
     type: SET_PAGE,
     payload: page,
@@ -111,4 +121,11 @@ export let setPageAction = (page, fromFilters) => (dispatch, getState) => {
   if (fromFilters === undefined) {
     getDataAction()(dispatch, getState);
   }
+};
+
+export let setCurrentCardAction = (i: number) => (dispatch: Action) => {
+  dispatch({
+    type: SET_CURRENT_CARD,
+    payload: i,
+  });
 };

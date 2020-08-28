@@ -4,10 +4,10 @@
 
 En el buscador escriba el nombre de algún personaje, lugar o episodio, luego puede variar entre ellos con los filtros a su izquierda. Para borrar toda la búsqueda actual toque el icono en forma de ❌ arriba a la derecha. En caso de no haber resultados para su búsqueda se mostrará el mensaje "No results❌" Enjoy it! 🚀
 
-![Screenshot](screenshot-1.png)
-![Screenshot](screenshot-2.png)
-![Screenshot](screenshot-3.png)
-![Screenshot](screenshot-4.png)
+![Screenshot](./src/assets/images/screenshot-1.png)
+![Screenshot](./src/assets/images/screenshot-2.png)
+![Screenshot](./src/assets/images/screenshot-3.png)
+![Screenshot](./src/assets/images/screenshot-4.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

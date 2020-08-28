@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setNameAction } from "../../redux/queryDuck";
+import { State } from "../../interfaces/State";
+import { Data } from "../../interfaces/Data";
 
-function Search({ name, setNameAction }) {
-  function noSubmit(e) {
+function Search({ name, setNameAction }: Data) {
+  function noSubmit(e: any) {
     e.preventDefault();
   }
 
@@ -24,7 +26,7 @@ function Search({ name, setNameAction }) {
 
         <button
           className="btn-floating btn-small waves-effect waves-light red"
-          disabled={name === ''}
+          disabled={name === ""}
           onClick={() => setNameAction("")}
         >
           <i className="material-icons">clear</i>
@@ -34,7 +36,7 @@ function Search({ name, setNameAction }) {
   );
 }
 
-function mapState(state) {
+function mapState(state: State) {
   return {
     name: state.name,
   };

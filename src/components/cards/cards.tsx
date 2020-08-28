@@ -1,10 +1,21 @@
 import React from "react";
 import Card from "../card/card";
 import { connect } from "react-redux";
-import { setPageAction } from "../../redux/queryDuck";
+import { setPageAction, setCurrentCardAction } from "../../redux/queryDuck";
+import { State } from "../../interfaces/State";
+import { Data } from "../../interfaces/Data";
 
-function Cards({ data, name, page, filter, fetching, error, setPageAction }) {
-  function changePage(page) {
+function Cards({
+  data,
+  name,
+  page,
+  filter,
+  fetching,
+  error,
+  setPageAction,
+  setCurrentCardAction,
+}: Data) {
+  function changePage(page: number) {
     if (page === null) {
       return;
     } else {
@@ -14,12 +25,12 @@ function Cards({ data, name, page, filter, fetching, error, setPageAction }) {
 
   if (name.length < 3) {
     return (
-      <h4 className="center-align">
+      <h3 className="center-align">
         Here will appear what you are searching
         <span role="img" aria-label="Emoji">
           🚀
         </span>
-      </h4>
+      </h3>
     );
   }
 
@@ -52,36 +63,28 @@ function Cards({ data, name, page, filter, fetching, error, setPageAction }) {
       </h3>
     );
 
-  let pages = new Array(data[filter].info.pages)
-    .fill(0)
-    .map((zero) => (zero += Math.random()));
+  let pages =
+    typeof data !== "undefined"
+      ? new Array(data[filter].info.pages)
+          .fill(0)
+          .map((zero) => (zero += Math.random()))
+      : [];
 
   return (
     <>
       <div className="row">
         {data[filter].results.map(
-          (
-            {
-              id,
-              name,
-              image,
-              dimension,
-              episode,
-              type,
-              gender,
-              species,
-              air_date,
-              characters,
-              residents,
-            },
-            i
-          ) => (
+          ({ id, name, image, dimension, episode }: any, i: number) => (
             <div key={id}>
               <div className="col s6 l3 hoverable">
                 <div className="card">
                   {filter === "characters" ? (
                     <>
-                      <a className="modal-trigger" href={`#${id}`}>
+                      <a
+                        className="modal-trigger"
+                        onMouseOver={() => setCurrentCardAction(i)}
+                        href={`#${id}`}
+                      >
                         <div className="card-image">
                           <img src={image} alt={name} />
                         </div>
@@ -93,19 +96,15 @@ function Cards({ data, name, page, filter, fetching, error, setPageAction }) {
                         </div>
                       </a>
 
-                      <Card
-                        id={id}
-                        filter={filter}
-                        name={name}
-                        image={image}
-                        type={type}
-                        gender={gender}
-                        species={species}
-                      />
+                      <Card />
                     </>
                   ) : (
                     <>
-                      <a className="modal-trigger" href={`#${id}`}>
+                      <a
+                        className="modal-trigger"
+                        onMouseOver={() => setCurrentCardAction(i)}
+                        href={`#${id}`}
+                      >
                         <div className="card-height card-content">
                           <div className="card-title center-align">
                             <strong>
@@ -125,17 +124,7 @@ function Cards({ data, name, page, filter, fetching, error, setPageAction }) {
                         </div>
                       </a>
 
-                      <Card
-                        id={id}
-                        name={name}
-                        episode={episode}
-                        dimension={dimension}
-                        air_date={air_date}
-                        type={type}
-                        residents={residents}
-                        characters={characters}
-                        filter={filter}
-                      />
+                      <Card />
                     </>
                   )}
                 </div>
@@ -184,7 +173,7 @@ function Cards({ data, name, page, filter, fetching, error, setPageAction }) {
   );
 }
 
-function mapState(state) {
+function mapState(state: State) {
   return {
     data: state.data,
     name: state.name,
@@ -195,4 +184,7 @@ function mapState(state) {
   };
 }
 
-export default connect(mapState, { setPageAction })(Cards);
+export default connect(mapState, {
+  setPageAction,
+  setCurrentCardAction,
+})(Cards);

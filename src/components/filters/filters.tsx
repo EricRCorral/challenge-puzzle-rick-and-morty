@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setPageAction, setFilterAction } from "../../redux/queryDuck";
+import { State } from "../../interfaces/State";
+import { Data } from "../../interfaces/Data";
 
-function Filters({ filter, fetching, setFilterAction, setPageAction }) {
+function Filters({ filter, fetching, setFilterAction, setPageAction }: Data) {
   const radios = ["Characters", "Locations", "Episodes"];
 
-  function selectFilter(filterSelected) {
+  function selectFilter(filterSelected: string) {
     setPageAction(1, false);
     setFilterAction(filterSelected);
   }
@@ -35,7 +37,7 @@ function Filters({ filter, fetching, setFilterAction, setPageAction }) {
   );
 }
 
-function mapState(state) {
+function mapState(state: State) {
   return {
     filter: state.filter,
     fetching: state.fetching,
