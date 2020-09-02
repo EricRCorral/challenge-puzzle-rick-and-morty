@@ -1,10 +1,10 @@
-import { Characters, Locations, Episodes } from "./Interfaces";
+import { Characters, Episodes, Locations } from "./variables";
 
-export interface Data {
+export interface Response {
   [characters: string]: Characters;
   locations?: Locations;
   episodes?: Episodes;
-  info: {
+  info?: {
     pages: number;
     next: number;
   };

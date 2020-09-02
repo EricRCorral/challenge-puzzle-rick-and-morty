@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setNameAction } from "../../redux/queryDuck";
-import { State } from "../../interfaces/State";
-import { Data } from "../../interfaces/Data";
 
-function Search({ name, setNameAction }: Data) {
-  function noSubmit(e: any) {
+interface State  {
+  name: string,
+  setNameAction: {(name: string): any}
+}
+
+const Search = ({ name, setNameAction }: State) => {
+  const noSubmit = (e: any) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <>
@@ -34,12 +37,12 @@ function Search({ name, setNameAction }: Data) {
       </form>
     </>
   );
-}
+};
 
-function mapState(state: State) {
+const mapStateToProps = (state: State) => {
   return {
     name: state.name,
   };
-}
+};
 
-export default connect(mapState, { setNameAction })(Search);
+export default connect(mapStateToProps, { setNameAction })(Search);

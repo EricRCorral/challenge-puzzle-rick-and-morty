@@ -1,11 +1,21 @@
 import React from "react";
-import Card from "../card/card";
+import { Card } from "..";
 import { connect } from "react-redux";
 import { setPageAction, setCurrentCardAction } from "../../redux/queryDuck";
-import { State } from "../../interfaces/State";
-import { Data } from "../../interfaces/Data";
+import { Response } from "../../apollo/types";
 
-function Cards({
+interface State {
+  data: Response;
+  name: string;
+  page: number;
+  filter: string;
+  fetching: boolean;
+  error: boolean;
+  setPageAction: any;
+  setCurrentCardAction: { (i: number): any };
+}
+
+const Cards = ({
   data,
   name,
   page,
@@ -14,14 +24,14 @@ function Cards({
   error,
   setPageAction,
   setCurrentCardAction,
-}: Data) {
-  function changePage(page: number) {
+}: State) => {
+  const changePage = (page: number) => {
     if (page === null) {
       return;
     } else {
       setPageAction(page);
     }
-  }
+  };
 
   if (name.length < 3) {
     return (
@@ -53,12 +63,23 @@ function Cards({
       </div>
     );
 
-  if (error)
+  if (error) {
     return (
       <h3 className="center-align">
-        No results{" "}
+        Something goes wrong{" "}
         <span role="img" aria-label="Emoji">
           ❌
+        </span>
+      </h3>
+    );
+  }
+
+  if (data[filter] === null)
+    return (
+      <h3 className="center-align">
+        No results
+        <span role="img" aria-label="Emoji">
+          😔
         </span>
       </h3>
     );
@@ -171,9 +192,9 @@ function Cards({
       </div>
     </>
   );
-}
+};
 
-function mapState(state: State) {
+const mapStateToProps = (state: State) => {
   return {
     data: state.data,
     name: state.name,
@@ -182,9 +203,9 @@ function mapState(state: State) {
     fetching: state.fetching,
     error: state.error,
   };
-}
+};
 
-export default connect(mapState, {
+export default connect(mapStateToProps, {
   setPageAction,
   setCurrentCardAction,
 })(Cards);

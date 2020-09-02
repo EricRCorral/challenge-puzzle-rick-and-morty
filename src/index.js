@@ -4,7 +4,7 @@ import * as serviceWorker from "./serviceWorker";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import generateStore from "./redux/store";
-import "./index.css";
+import "./styles.css";
 import App from "./App";
 
 let store = generateStore();

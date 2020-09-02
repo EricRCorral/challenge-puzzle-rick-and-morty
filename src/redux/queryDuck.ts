@@ -1,10 +1,26 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import {
-  queryCharacters,
-  queryEpisodes,
-  queryLocations,
-} from "../apollo/queries";
-import { Action, State } from "../interfaces/Interfaces";
+import queryCharacters from "../apollo/queries/queryCharacters";
+import queryEpisodes from "../apollo/queries/queryEpisodes";
+import queryLocations from "../apollo/queries/queryLocations";
+import { Response } from "../apollo/types";
+
+interface State {
+  name: string;
+  page: number;
+  filter: string;
+  data: Response;
+  fetching: boolean;
+  currentCard: number;
+}
+
+interface Action {
+  type: string;
+  payload: any;
+}
+
+interface Dispatch {
+  (type: object): any;
+}
 
 let initialData: State = {
   name: "",
@@ -58,7 +74,10 @@ export default function reducer(state = initialData, action: Action) {
   }
 }
 
-export let getDataAction = () => (dispatch: Action, getState: { (): any }) => {
+export let getDataAction = () => (
+  dispatch: Dispatch,
+  getState: { (): any }
+) => {
   let query =
     getState().filter === "characters"
       ? queryCharacters
@@ -73,6 +92,7 @@ export let getDataAction = () => (dispatch: Action, getState: { (): any }) => {
     .query({
       query: query,
       variables: { name: { name: getState().name }, page: getState().page },
+      errorPolicy: "all",
     })
     .then(({ data }) => {
       dispatch({
@@ -89,7 +109,7 @@ export let getDataAction = () => (dispatch: Action, getState: { (): any }) => {
 };
 
 export let setNameAction = (searcherVal: string) => (
-  dispatch: Action,
+  dispatch: Dispatch,
   getState: { (): any }
 ) => {
   dispatch({
@@ -100,7 +120,7 @@ export let setNameAction = (searcherVal: string) => (
 };
 
 export let setFilterAction = (filter: string) => (
-  dispatch: Action,
+  dispatch: Dispatch,
   getState: { (): any }
 ) => {
   dispatch({
@@ -111,7 +131,7 @@ export let setFilterAction = (filter: string) => (
 };
 
 export let setPageAction = (page: number, fromFilters: boolean) => (
-  dispatch: Action,
+  dispatch: Dispatch,
   getState: { (): any }
 ) => {
   dispatch({
@@ -123,7 +143,7 @@ export let setPageAction = (page: number, fromFilters: boolean) => (
   }
 };
 
-export let setCurrentCardAction = (i: number) => (dispatch: Action) => {
+export let setCurrentCardAction = (i: number) => (dispatch: Dispatch) => {
   dispatch({
     type: SET_CURRENT_CARD,
     payload: i,
