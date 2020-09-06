@@ -2,10 +2,12 @@ import React from "react";
 import { Card } from "..";
 import { connect } from "react-redux";
 import { setPageAction, setCurrentCardAction } from "../../redux/queryDuck";
-import { Response } from "../../apollo/types";
+import { Response as CharactersResponse } from "../../apollo/queries/queryCharacters";
+import { Response as LocationsResponse } from "../../apollo/queries/queryLocations";
+import { Response as EpisodesResponse } from "../../apollo/queries/queryEpisodes";
 
 interface State {
-  data: Response;
+  data: CharactersResponse | LocationsResponse | EpisodesResponse;
   name: string;
   page: number;
   filter: string;
@@ -25,7 +27,18 @@ const Cards = ({
   setPageAction,
   setCurrentCardAction,
 }: State) => {
-  const changePage = (page: number) => {
+  const DATA_FILTERED =
+    filter === "characters"
+      ? data.characters
+      : filter === "locations"
+      ? data.locations
+      : data.episodes;
+
+  const NEXT = DATA_FILTERED?.info.next;
+  const PREV = DATA_FILTERED?.info.prev;
+  const PAGES = DATA_FILTERED?.info.pages;
+
+  const changePage = (page?: number) => {
     if (page === null) {
       return;
     } else {
@@ -74,7 +87,7 @@ const Cards = ({
     );
   }
 
-  if (data[filter] === null)
+  if (DATA_FILTERED === null)
     return (
       <h3 className="center-align">
         No results
@@ -86,15 +99,13 @@ const Cards = ({
 
   let pages =
     typeof data !== "undefined"
-      ? new Array(data[filter].info.pages)
-          .fill(0)
-          .map((zero) => (zero += Math.random()))
+      ? new Array(PAGES).fill(0).map((zero) => (zero += Math.random()))
       : [];
 
   return (
     <>
       <div className="row">
-        {data[filter].results.map(
+        {DATA_FILTERED?.results.map(
           ({ id, name, image, dimension, episode }: any, i: number) => (
             <div key={id}>
               <div className="col s6 l3 hoverable">
@@ -159,7 +170,7 @@ const Cards = ({
         <ul className="pagination">
           <li
             className={page === 1 ? "waves-effect disabled" : "waves-effect"}
-            onClick={() => changePage(data[filter].info.prev)}
+            onClick={() => changePage(PREV)}
           >
             <a href="/#">
               <i className="material-icons">chevron_left</i>
@@ -182,7 +193,7 @@ const Cards = ({
             className={
               pages.length === page ? "waves-effect disabled" : "waves-effect"
             }
-            onClick={() => changePage(data[filter].info.next)}
+            onClick={() => changePage(NEXT)}
           >
             <a href="/#">
               <i className="material-icons">chevron_right</i>

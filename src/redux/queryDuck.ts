@@ -1,14 +1,22 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import queryCharacters from "../apollo/queries/queryCharacters";
-import queryEpisodes from "../apollo/queries/queryEpisodes";
-import queryLocations from "../apollo/queries/queryLocations";
-import { Response } from "../apollo/types";
+import { ApolloClient, InMemoryCache, DocumentNode } from "@apollo/client";
+import queryCharacters, {
+  Response as CharactersResponse,
+  Variables as CharactersVariables,
+} from "../apollo/queries/queryCharacters";
+import queryEpisodes, {
+  Response as EpisodesResponse,
+  Variables as EpisodesVariables,
+} from "../apollo/queries/queryEpisodes";
+import queryLocations, {
+  Response as LocationsResponse,
+  Variables as LocationsVariables,
+} from "../apollo/queries/queryLocations";
 
 interface State {
   name: string;
   page: number;
   filter: string;
-  data: Response;
+  data: CharactersResponse | EpisodesResponse | LocationsResponse;
   fetching: boolean;
   currentCard: number;
 }
@@ -78,34 +86,72 @@ export let getDataAction = () => (
   dispatch: Dispatch,
   getState: { (): any }
 ) => {
-  let query =
-    getState().filter === "characters"
-      ? queryCharacters
-      : getState().filter === "locations"
-      ? queryLocations
-      : queryEpisodes;
+  const FILTER: string = getState().filter;
+  const PAGE: number = getState().page;
+  const NAME: string = getState().name;
 
   dispatch({
     type: GET_DATA,
   });
-  return client
-    .query({
-      query: query,
-      variables: { name: { name: getState().name }, page: getState().page },
-      errorPolicy: "all",
-    })
-    .then(({ data }) => {
-      dispatch({
-        type: GET_DATA_SUCCESS,
-        payload: { data, error: false },
+
+  if (FILTER === "characters") {
+    return client
+      .query<DocumentNode, CharactersVariables>({
+        query: queryCharacters,
+        variables: { name: { name: NAME }, page: PAGE },
+        errorPolicy: "all",
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: GET_DATA_SUCCESS,
+          payload: { data, error: false },
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_DATA_ERROR,
+          payload: { error: true },
+        });
       });
-    })
-    .catch(() => {
-      dispatch({
-        type: GET_DATA_ERROR,
-        payload: { error: true },
+  } else if (FILTER === "locations") {
+    return client
+      .query<DocumentNode, LocationsVariables>({
+        query: queryLocations,
+        variables: { name: { name: NAME }, page: PAGE },
+        errorPolicy: "all",
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: GET_DATA_SUCCESS,
+          payload: { data, error: false },
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_DATA_ERROR,
+          payload: { error: true },
+        });
       });
-    });
+  } else {
+    return client
+      .query<DocumentNode, EpisodesVariables>({
+        query: queryEpisodes,
+        variables: { name: { name: NAME }, page: PAGE },
+        errorPolicy: "all",
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: GET_DATA_SUCCESS,
+          payload: { data, error: false },
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_DATA_ERROR,
+          payload: { error: true },
+        });
+      });
+  }
 };
 
 export let setNameAction = (searcherVal: string) => (

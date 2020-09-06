@@ -1,22 +1,36 @@
 import React, { useEffect } from "react";
 import M from "materialize-css";
 import { connect } from "react-redux";
-import { Response } from "../../apollo/types";
+import { Response as CharactersResponse } from "../../apollo/queries/queryCharacters";
+import { Response as LocationsResponse } from "../../apollo/queries/queryLocations";
+import { Response as EpisodesResponse } from "../../apollo/queries/queryEpisodes";
 
 interface State {
-  data: Response;
+  data: CharactersResponse | LocationsResponse | EpisodesResponse;
   filter: string;
-  currentCard?: number;
+  currentCard: number;
 }
 
-interface RequiredData {
-  id: number;
-  name: string;
-  image: string;
-}
+const Card = ({ filter, data, currentCard }: State) => {
+  const DATA =
+    filter === "characters"
+      ? data.characters?.results[currentCard]
+      : filter === "locations"
+      ? data.locations?.results[currentCard]
+      : data.episodes?.results[currentCard];
 
-const Card = ({ filter, data }: State) => {
-  const REQUIRED_DATA = filter === "locations" ? "residents" : "characters";
+  const REQUIRED_DATA =
+    filter === "locations" ? DATA?.residents : DATA?.characters;
+
+  const ID = DATA?.id;
+  const IMAGE = DATA?.image;
+  const NAME = DATA?.name;
+  const GENDER = DATA?.gender;
+  const SPECIES = DATA?.species;
+  const TYPE = DATA?.type;
+  const DIMENSION = DATA?.dimension;
+  const EPISODE = DATA?.episode;
+  const AIR_DATE = DATA?.air_date;
 
   useEffect(() => {
     const MODAL = document.querySelectorAll(".modal");
@@ -27,70 +41,56 @@ const Card = ({ filter, data }: State) => {
     return null;
   }
 
-  const {
-    id,
-    image,
-    name,
-    type,
-    air_date,
-    gender,
-    species,
-    dimension,
-    episode,
-  } = data;
-
   return (
     <>
-      <div id={id} className="modal">
+      <div id={ID} className="modal">
         <div className="modal-content">
           <i className="material-icons modal-close">close</i>
 
           {filter === "characters" ? (
             <>
               <div className="center-align">
-                <img className="responsive-img" src={image} alt={name} />
+                <img className="responsive-img" src={IMAGE} alt={NAME} />
 
-                <h4>{name.toUpperCase()}</h4>
+                <h4>{NAME?.toUpperCase()}</h4>
               </div>
 
-              <h5>Gender: {gender}</h5>
+              <h5>Gender: {GENDER}</h5>
 
-              <h5>Specie: {species}</h5>
+              <h5>Specie: {SPECIES}</h5>
 
-              {type !== "" && <h5>Type: {type}</h5>}
+              {TYPE !== "" && <h5>Type: {TYPE}</h5>}
             </>
           ) : (
             <>
-              <h4 className="center-align">{name.toUpperCase()}</h4>
+              <h4 className="center-align">{NAME?.toUpperCase()}</h4>
 
-              {dimension && <h5>Dimension: {dimension}</h5>}
+              {DIMENSION && <h5>Dimension: {DIMENSION}</h5>}
 
-              {type && <h5>Type: {type}</h5>}
+              {TYPE && <h5>Type: {TYPE}</h5>}
 
-              {episode && <h5>Episode code: {episode}</h5>}
+              {EPISODE && <h5>Episode code: {EPISODE}</h5>}
 
-              {air_date && <h5>Air date: {air_date}</h5>}
+              {AIR_DATE && <h5>Air date: {AIR_DATE}</h5>}
 
               <h5>{filter === "locations" ? "Residents: " : "Characters: "}</h5>
 
               <div className="row">
-                {data[REQUIRED_DATA].slice(0, 5).map(
-                  ({ id, image, name }: RequiredData) => (
-                    <div className="col s12 m3" key={id}>
-                      <div className="card">
-                        {!!image && (
-                          <>
-                            <div className="card-image">
-                              <img src={image} alt={name} />
-                            </div>
+                {REQUIRED_DATA?.slice(0, 5).map(({ id, image, name }) => (
+                  <div className="col s12 m3" key={id}>
+                    <div className="card">
+                      {!!image && (
+                        <>
+                          <div className="card-image">
+                            <img src={image} alt={name} />
+                          </div>
 
-                            <div className="card-content truncate">{name}</div>
-                          </>
-                        )}
-                      </div>
+                          <div className="card-content truncate">{name}</div>
+                        </>
+                      )}
                     </div>
-                  )
-                )}
+                  </div>
+                ))}
               </div>
             </>
           )}
@@ -102,8 +102,9 @@ const Card = ({ filter, data }: State) => {
 
 const mapStateToProps = (state: State) => {
   return {
-    data: state.data[state.filter].results[state.currentCard],
+    data: state.data,
     filter: state.filter,
+    currentCard: state.currentCard,
   };
 };
 
