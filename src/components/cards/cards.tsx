@@ -16,6 +16,14 @@ interface State {
   setCurrentCardAction: { (i: number): any };
 }
 
+interface Results {
+  id?: string;
+  name?: string;
+  image?: string;
+  dimension?: string;
+  episode?: string;
+}
+
 const Cards = ({
   data,
   searcherValue,
@@ -43,60 +51,47 @@ const Cards = ({
     <>
       <div className="row">
         {DATA_FILTERED?.results.map(
-          ({ id, name, image, dimension, episode }: any, i: number) => (
-            <div key={id}>
-              <div className="col s6 l3 hoverable">
-                <div className="card">
+          ({ id, name, image, dimension, episode }: Results, i: number) => (
+            <div key={id} className="col s6 l3 hoverable">
+              <div className="card">
+                <a
+                  className="modal-trigger"
+                  onMouseOver={() => setCurrentCardAction(i)}
+                  href={`#${id}`}
+                >
                   {filter === "characters" ? (
                     <>
-                      <a
-                        className="modal-trigger"
-                        onMouseOver={() => setCurrentCardAction(i)}
-                        href={`#${id}`}
-                      >
-                        <div className="card-image">
-                          <img src={image} alt={name} />
-                        </div>
+                      <div className="card-image">
+                        <img src={image} alt={name} />
+                      </div>
 
-                        <div className="card-content center-align">
-                          <div className="truncate">
-                            <strong>{name}</strong>
-                          </div>
-                        </div>
-                      </a>
-
-                      <Card />
+                      <div className="card-content center-align truncate">
+                        <strong>{name}</strong>
+                      </div>
                     </>
                   ) : (
                     <>
-                      <a
-                        className="modal-trigger"
-                        onMouseOver={() => setCurrentCardAction(i)}
-                        href={`#${id}`}
-                      >
-                        <div className="card-height card-content">
-                          <div className="card-title center-align">
-                            <strong>
-                              {filter === "locations"
-                                ? "Location: "
-                                : "Episode: "}
-                              {name}
-                            </strong>
-                          </div>
-
-                          <div className="card-action center-align">
-                            {filter === "locations" && "Dimension: "}
-                            {dimension}
-                            {filter === "episodes" && "Episode code: "}
-                            {episode}
-                          </div>
+                      <div className="card-height card-content">
+                        <div className="card-title center-align">
+                          <strong>
+                            {filter === "locations"
+                              ? "Location: "
+                              : "Episode: "}
+                            {name}
+                          </strong>
                         </div>
-                      </a>
 
-                      <Card />
+                        <div className="card-action center-align">
+                          {filter === "locations" && "Dimension: "}
+                          {dimension}
+                          {filter === "episodes" && "Episode code: "}
+                          {episode}
+                        </div>
+                      </div>
                     </>
                   )}
-                </div>
+                </a>
+                <Card />
               </div>
             </div>
           )

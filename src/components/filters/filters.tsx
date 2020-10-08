@@ -1,24 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setPageAction, setFilterAction } from "../../actions/query";
+import { setFilterAction } from "../../actions/query";
 
 interface State {
-  filter: string,
-  fetching: boolean,
-  setFilterAction: {(filter: string): any},
-  setPageAction: {(page: number, notUndefined: boolean): any}
+  filter: string;
+  fetching: boolean;
+  setFilterAction: { (filter: string): any };
 }
 
-const Filters = ({
-  filter,
-  fetching,
-  setFilterAction,
-  setPageAction,
-}: State) => {
-  const radios = ["Characters", "Locations", "Episodes"];
+const Filters = ({ filter, fetching, setFilterAction }: State) => {
+  const FILTERS = ["Characters", "Locations", "Episodes"];
 
   const selectFilter = (filterSelected: string) => {
-    setPageAction(1, false);
     setFilterAction(filterSelected);
   };
 
@@ -27,7 +20,7 @@ const Filters = ({
       <h4>Filters</h4>
 
       <form>
-        {radios.map((filterName) => (
+        {FILTERS.map((filterName) => (
           <p key={filterName}>
             <label>
               <input
@@ -54,6 +47,4 @@ const mapStateToProps = (state: State) => {
   };
 };
 
-export default connect(mapStateToProps, { setPageAction, setFilterAction })(
-  Filters
-);
+export default connect(mapStateToProps, { setFilterAction })(Filters);

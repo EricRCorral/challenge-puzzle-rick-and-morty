@@ -12,7 +12,7 @@ interface State {
 }
 
 const Card = ({ filter, data, currentCard }: State) => {
-  const DATA =
+  const RESULTS =
     filter === "characters"
       ? data.characters?.results[currentCard]
       : filter === "locations"
@@ -20,21 +20,20 @@ const Card = ({ filter, data, currentCard }: State) => {
       : data.episodes?.results[currentCard];
 
   const REQUIRED_DATA =
-    filter === "locations" ? DATA?.residents : DATA?.characters;
+    filter === "locations" ? RESULTS?.residents : RESULTS?.characters;
 
-  const ID = DATA?.id;
-  const IMAGE = DATA?.image;
-  const NAME = DATA?.name;
-  const GENDER = DATA?.gender;
-  const SPECIES = DATA?.species;
-  const TYPE = DATA?.type;
-  const DIMENSION = DATA?.dimension;
-  const EPISODE = DATA?.episode;
-  const AIR_DATE = DATA?.air_date;
+  const ID = RESULTS?.id;
+  const IMAGE = RESULTS?.image;
+  const NAME = RESULTS?.name;
+  const GENDER = RESULTS?.gender;
+  const SPECIES = RESULTS?.species;
+  const TYPE = RESULTS?.type;
+  const DIMENSION = RESULTS?.dimension;
+  const EPISODE = RESULTS?.episode;
+  const AIR_DATE = RESULTS?.air_date;
 
   useEffect(() => {
-    const MODAL = document.querySelectorAll(".modal");
-    M.Modal.init(MODAL);
+    M.Modal.init(document.querySelectorAll(".modal"));
   });
 
   if (data === undefined) {

@@ -12,7 +12,13 @@ interface State {
   setPageAction: any;
 }
 
-const Paginator = ({ data, page, filter, setPageAction }: State) => {
+const Paginator = ({
+  data,
+  page,
+  filter,
+  setPageAction,
+}:
+State) => {
   const DATA_FILTERED =
     filter === "characters"
       ? data.characters

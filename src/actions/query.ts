@@ -118,10 +118,11 @@ export let setFilterAction = (filter: string) => (
     type: SET_FILTER,
     payload: filter,
   });
+  setPageAction(1)(dispatch, getState)
   getDataAction()(dispatch, getState);
 };
 
-export let setPageAction = (page: number, fromFilters: boolean) => (
+export let setPageAction = (page: number) => (
   dispatch: Dispatch,
   getState: { (): any }
 ) => {
@@ -129,14 +130,12 @@ export let setPageAction = (page: number, fromFilters: boolean) => (
     type: SET_PAGE,
     payload: page,
   });
-  if (fromFilters === undefined) {
     getDataAction()(dispatch, getState);
-  }
 };
 
-export let setCurrentCardAction = (i: number) => (dispatch: Dispatch) => {
+export let setCurrentCardAction = (currentCard: number) => (dispatch: Dispatch) => {
   dispatch({
     type: SET_CURRENT_CARD,
-    payload: i,
+    payload: currentCard,
   });
 };
