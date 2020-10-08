@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setPageAction, setFilterAction } from "../../redux/queryDuck";
+import { setPageAction, setFilterAction } from "../../actions/query";
 
 interface State {
   filter: string,
@@ -27,18 +27,18 @@ const Filters = ({
       <h4>Filters</h4>
 
       <form>
-        {radios.map((name) => (
-          <p key={name}>
+        {radios.map((filterName) => (
+          <p key={filterName}>
             <label>
               <input
-                checked={name.toLowerCase() === filter}
+                checked={filterName.toLowerCase() === filter}
                 className="with-gap"
                 type="radio"
                 disabled={fetching}
-                onChange={() => selectFilter(name.toLowerCase())}
+                onChange={() => selectFilter(filterName.toLowerCase())}
               />
 
-              <span>{name}</span>
+              <span>{filterName}</span>
             </label>
           </p>
         ))}

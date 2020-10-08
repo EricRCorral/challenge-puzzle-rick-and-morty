@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
-import generateStore from "./redux/store";
+import { generateStore } from "./store";
 import "./styles.css";
 import App from "./App";
 

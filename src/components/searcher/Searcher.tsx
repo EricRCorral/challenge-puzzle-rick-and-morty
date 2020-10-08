@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setNameAction } from "../../redux/queryDuck";
+import { setSearcherValueAction } from "../../actions/query";
 
 interface State  {
-  name: string,
-  setNameAction: {(name: string): any}
+  searcherValue: string,
+  setSearcherValueAction: {(searcherValue: string): any}
 }
 
-const Search = ({ name, setNameAction }: State) => {
+const Searcher = ({ searcherValue, setSearcherValueAction }: State) => {
   const noSubmit = (e: any) => {
     e.preventDefault();
   };
@@ -19,8 +19,8 @@ const Search = ({ name, setNameAction }: State) => {
           <i className="material-icons prefix">search</i>
 
           <input
-            value={name}
-            onChange={(e) => setNameAction(e.target.value)}
+            value={searcherValue}
+            onChange={(e) => setSearcherValueAction(e.target.value)}
             type="text"
           />
 
@@ -29,8 +29,8 @@ const Search = ({ name, setNameAction }: State) => {
 
         <button
           className="btn-floating btn-small waves-effect waves-light red"
-          disabled={name === ""}
-          onClick={() => setNameAction("")}
+          disabled={searcherValue === ""}
+          onClick={() => setSearcherValueAction("")}
         >
           <i className="material-icons">clear</i>
         </button>
@@ -41,8 +41,8 @@ const Search = ({ name, setNameAction }: State) => {
 
 const mapStateToProps = (state: State) => {
   return {
-    name: state.name,
+    searcherValue: state.searcherValue,
   };
 };
 
-export default connect(mapStateToProps, { setNameAction })(Search);
+export default connect(mapStateToProps, { setSearcherValueAction })(Searcher);

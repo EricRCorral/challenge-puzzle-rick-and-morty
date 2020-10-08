@@ -1,30 +1,27 @@
 import React from "react";
-import { Card } from "..";
+import { Card, Paginator } from "..";
 import { connect } from "react-redux";
-import { setPageAction, setCurrentCardAction } from "../../redux/queryDuck";
+import { setCurrentCardAction } from "../../actions/query";
 import { Response as CharactersResponse } from "../../apollo/queries/queryCharacters";
 import { Response as LocationsResponse } from "../../apollo/queries/queryLocations";
 import { Response as EpisodesResponse } from "../../apollo/queries/queryEpisodes";
+import { Error, NoResults, NotSearched, Loader } from "../search-states";
 
 interface State {
   data: CharactersResponse | LocationsResponse | EpisodesResponse;
-  name: string;
-  page: number;
+  searcherValue: string;
   filter: string;
   fetching: boolean;
   error: boolean;
-  setPageAction: any;
   setCurrentCardAction: { (i: number): any };
 }
 
 const Cards = ({
   data,
-  name,
-  page,
+  searcherValue,
   filter,
   fetching,
   error,
-  setPageAction,
   setCurrentCardAction,
 }: State) => {
   const DATA_FILTERED =
@@ -34,73 +31,13 @@ const Cards = ({
       ? data.locations
       : data.episodes;
 
-  const NEXT = DATA_FILTERED?.info.next;
-  const PREV = DATA_FILTERED?.info.prev;
-  const PAGES = DATA_FILTERED?.info.pages;
+  if (searcherValue.length < 3) return <NotSearched />;
 
-  const changePage = (page?: number) => {
-    if (page === null) {
-      return;
-    } else {
-      setPageAction(page);
-    }
-  };
+  if (fetching) return <Loader />;
 
-  if (name.length < 3) {
-    return (
-      <h3 className="center-align">
-        Here will appear what you are searching
-        <span role="img" aria-label="Emoji">
-          🚀
-        </span>
-      </h3>
-    );
-  }
+  if (error) return <Error />;
 
-  if (fetching)
-    return (
-      <div className="center-align">
-        <div className="preloader-wrapper active big">
-          <div className="spinner-layer spinner-blue-only">
-            <div className="circle-clipper left">
-              <div className="circle"></div>
-            </div>
-            <div className="gap-patch">
-              <div className="circle"></div>
-            </div>
-            <div className="circle-clipper right">
-              <div className="circle"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-
-  if (error) {
-    return (
-      <h3 className="center-align">
-        Something goes wrong{" "}
-        <span role="img" aria-label="Emoji">
-          ❌
-        </span>
-      </h3>
-    );
-  }
-
-  if (DATA_FILTERED === null)
-    return (
-      <h3 className="center-align">
-        No results
-        <span role="img" aria-label="Emoji">
-          😔
-        </span>
-      </h3>
-    );
-
-  let pages =
-    typeof data !== "undefined"
-      ? new Array(PAGES).fill(0).map((zero) => (zero += Math.random()))
-      : [];
+  if (DATA_FILTERED === null) return <NoResults />;
 
   return (
     <>
@@ -165,42 +102,7 @@ const Cards = ({
           )
         )}
       </div>
-
-      <div className="row center-align">
-        <ul className="pagination">
-          <li
-            className={page === 1 ? "waves-effect disabled" : "waves-effect"}
-            onClick={() => changePage(PREV)}
-          >
-            <a href="/#">
-              <i className="material-icons">chevron_left</i>
-            </a>
-          </li>
-
-          {pages.map((random, i) => (
-            <li
-              key={random}
-              className={
-                i + 1 === page ? "waves-effect active" : "waves-effect"
-              }
-              onClick={() => changePage(i + 1)}
-            >
-              <a href="/#">{i + 1}</a>
-            </li>
-          ))}
-
-          <li
-            className={
-              pages.length === page ? "waves-effect disabled" : "waves-effect"
-            }
-            onClick={() => changePage(NEXT)}
-          >
-            <a href="/#">
-              <i className="material-icons">chevron_right</i>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <Paginator />
     </>
   );
 };
@@ -208,8 +110,7 @@ const Cards = ({
 const mapStateToProps = (state: State) => {
   return {
     data: state.data,
-    name: state.name,
-    page: state.page,
+    searcherValue: state.searcherValue,
     filter: state.filter,
     fetching: state.fetching,
     error: state.error,
@@ -217,6 +118,5 @@ const mapStateToProps = (state: State) => {
 };
 
 export default connect(mapStateToProps, {
-  setPageAction,
   setCurrentCardAction,
 })(Cards);

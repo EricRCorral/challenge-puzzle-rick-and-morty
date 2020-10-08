@@ -1,39 +1,37 @@
 import React from "react";
-import { Cards, Filters, Footer, Search } from "./components";
+import { Cards, Filters, Footer, Searcher } from "./components";
 import { connect } from "react-redux";
 
-interface State  {
-  name: string
+interface State {
+  searcherValue: string;
 }
 
-const App = ({ name }: State) => {
-  return (
-    <>
-      <div className="container">
-        <Search />
+const App = ({ searcherValue }: State) => (
+  <>
+    <div className="container">
+      <Searcher />
 
-        <div className="row">
-            <Filters />
+      <div className="row">
+        <Filters />
 
-          <div
-            className={
-              name.length > 2
-                ? "col s12 m9 l10 cards-border"
-                : "col s12 m9 l10 cards-border-h"
-            }
-          >
-            <Cards />
-          </div>
+        <div
+          className={
+            searcherValue.length > 2
+              ? "col s12 m9 l10 cards-border"
+              : "col s12 m9 l10 cards-border-h"
+          }
+        >
+          <Cards />
         </div>
       </div>
-      <Footer />
-    </>
-  );
-};
+    </div>
+    <Footer />
+  </>
+);
 
 const mapStateToProps = (state: State) => {
   return {
-    name: state.name,
+    searcherValue: state.searcherValue,
   };
 };
 
