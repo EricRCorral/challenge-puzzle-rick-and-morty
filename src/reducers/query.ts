@@ -18,6 +18,7 @@ interface State {
   data: CharactersResponse | EpisodesResponse | LocationsResponse;
   fetching: boolean;
   currentCard: number;
+  error: boolean;
 }
 
 interface Action {
@@ -32,6 +33,7 @@ let initialData: State = {
   data: {},
   fetching: false,
   currentCard: 0,
+  error: false,
 };
 
 export default function reducer(state = initialData, action: Action) {
@@ -41,14 +43,13 @@ export default function reducer(state = initialData, action: Action) {
     case GET_DATA_SUCCESS:
       return {
         ...state,
-        data: action.payload.data,
-        error: action.payload.error,
+        data: action.payload,
         fetching: false,
       };
     case GET_DATA_ERROR:
       return {
         ...state,
-        error: action.payload.error,
+        error: action.payload,
         fetching: false,
       };
     case SET_SEARCHER_VALUE:

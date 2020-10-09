@@ -49,13 +49,13 @@ export let getDataAction = () => (
       .then(({ data }) => {
         dispatch({
           type: GET_DATA_SUCCESS,
-          payload: { data, error: false },
+          payload: data,
         });
       })
       .catch(() => {
         dispatch({
           type: GET_DATA_ERROR,
-          payload: { error: true },
+          payload: true,
         });
       });
   } else if (FILTER === "locations") {
@@ -68,13 +68,13 @@ export let getDataAction = () => (
       .then(({ data }) => {
         dispatch({
           type: GET_DATA_SUCCESS,
-          payload: { data, error: false },
+          payload: data,
         });
       })
       .catch(() => {
         dispatch({
           type: GET_DATA_ERROR,
-          payload: { error: true },
+          payload: true,
         });
       });
   } else {
@@ -87,13 +87,13 @@ export let getDataAction = () => (
       .then(({ data }) => {
         dispatch({
           type: GET_DATA_SUCCESS,
-          payload: { data, error: false },
+          payload: data,
         });
       })
       .catch(() => {
         dispatch({
           type: GET_DATA_ERROR,
-          payload: { error: true },
+          payload: true,
         });
       });
   }
@@ -118,7 +118,7 @@ export let setFilterAction = (filter: string) => (
     type: SET_FILTER,
     payload: filter,
   });
-  setPageAction(1)(dispatch, getState)
+  setPageAction(1)(dispatch, getState);
   getDataAction()(dispatch, getState);
 };
 
@@ -130,10 +130,12 @@ export let setPageAction = (page: number) => (
     type: SET_PAGE,
     payload: page,
   });
-    getDataAction()(dispatch, getState);
+  getDataAction()(dispatch, getState);
 };
 
-export let setCurrentCardAction = (currentCard: number) => (dispatch: Dispatch) => {
+export let setCurrentCardAction = (currentCard: number) => (
+  dispatch: Dispatch
+) => {
   dispatch({
     type: SET_CURRENT_CARD,
     payload: currentCard,
