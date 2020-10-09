@@ -8,24 +8,26 @@ interface State {
 
 const App = ({ searcherValue }: State) => (
   <>
-    <div className="container">
-      <Searcher />
+    <div className="background-img">
+      <div className="container">
+        <Searcher />
 
-      <div className="row">
-        <Filters />
+        <div className="row">
+          <Filters />
 
-        <div
-          className={
-            searcherValue.length > 2
-              ? "col s12 m9 l10 cards-border"
-              : "col s12 m9 l10 cards-border-h"
-          }
-        >
-          <Cards />
+          <div
+            className={
+              searcherValue.length > 2
+                ? "col s12 m9 l10 cards-border"
+                : "col s12 m9 l10 cards-border-h"
+            }
+          >
+            <Cards />
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
-    <Footer />
   </>
 );
 

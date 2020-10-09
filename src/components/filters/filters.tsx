@@ -17,7 +17,7 @@ const Filters = ({ filter, fetching, setFilterAction }: State) => {
 
   return (
     <div className="col s12 m2 filters">
-      <h4>Filters</h4>
+      <div className="filters-title">Filters</div>
 
       <form>
         {FILTERS.map((filterName) => (
@@ -31,7 +31,7 @@ const Filters = ({ filter, fetching, setFilterAction }: State) => {
                 onChange={() => selectFilter(filterName.toLowerCase())}
               />
 
-              <span>{filterName}</span>
+              <span className="text-whitesmoke">{filterName}</span>
             </label>
           </p>
         ))}

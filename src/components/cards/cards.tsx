@@ -65,14 +65,14 @@ const Cards = ({
                         <img src={image} alt={name} />
                       </div>
 
-                      <div className="card-content center-align truncate">
+                      <div className="card-content center-align truncate text-whitesmoke">
                         <strong>{name}</strong>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className="card-height card-content">
-                        <div className="card-title center-align">
+                        <div className="card-title center-align text-whitesmoke">
                           <strong>
                             {filter === "locations"
                               ? "Location: "
@@ -81,7 +81,7 @@ const Cards = ({
                           </strong>
                         </div>
 
-                        <div className="card-action center-align">
+                        <div className="card-action center-align text-whitesmoke">
                           {filter === "locations" && "Dimension: "}
                           {dimension}
                           {filter === "episodes" && "Episode code: "}

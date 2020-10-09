@@ -12,13 +12,7 @@ interface State {
   setPageAction: any;
 }
 
-const Paginator = ({
-  data,
-  page,
-  filter,
-  setPageAction,
-}:
-State) => {
+const Paginator = ({ data, page, filter, setPageAction }: State) => {
   const DATA_FILTERED =
     filter === "characters"
       ? data.characters
@@ -51,17 +45,21 @@ State) => {
           onClick={() => changePage(PREV)}
         >
           <a href="/#">
-            <i className="material-icons">chevron_left</i>
+            <i className="material-icons text-whitesmoke">chevron_left</i>
           </a>
         </li>
 
         {pages.map((random, i) => (
           <li
             key={random}
-            className={i + 1 === page ? "waves-effect active" : "waves-effect"}
+            className={
+              i + 1 === page ? "waves-effect active teal" : "waves-effect"
+            }
             onClick={() => changePage(i + 1)}
           >
-            <a href="/#">{i + 1}</a>
+            <a href="/#">
+              <div className="text-whitesmoke">{i + 1}</div>
+            </a>
           </li>
         ))}
 
@@ -72,7 +70,7 @@ State) => {
           onClick={() => changePage(NEXT)}
         >
           <a href="/#">
-            <i className="material-icons">chevron_right</i>
+            <i className="material-icons text-whitesmoke">chevron_right</i>
           </a>
         </li>
       </ul>

@@ -1,21 +1,10 @@
-import React from 'react'
+import React from "react";
+import { PORTAL } from "../../../assets/images";
 
 const Loader = () => (
-    <div className="center-align">
-        <div className="preloader-wrapper active big">
-          <div className="spinner-layer spinner-blue-only">
-            <div className="circle-clipper left">
-              <div className="circle"></div>
-            </div>
-            <div className="gap-patch">
-              <div className="circle"></div>
-            </div>
-            <div className="circle-clipper right">
-              <div className="circle"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-)
+  <div className="center-align">
+    <img src={PORTAL} alt="Portal" />
+  </div>
+);
 
-export default Loader
+export default Loader;

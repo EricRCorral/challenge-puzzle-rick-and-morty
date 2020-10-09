@@ -1,0 +1,13 @@
+.btn-align {
+  margin-top: 25px;
+}
+
+.logo-margin {
+    margin-top: 1rem;
+}
+
+@media screen and (min-width: 600px) {
+  .logo-margin {
+    margin-bottom: 1rem;
+  }
+}

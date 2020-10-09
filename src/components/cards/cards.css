@@ -16,6 +16,10 @@
   cursor: pointer;
 }
 
+.card {
+  background-color: #000000f2
+}
+
 @media screen and (max-width: 600px) {
   .cards-border,
   .cards-border-h {

@@ -2,10 +2,7 @@ import React from "react";
 
 const NoResults = () => (
   <h3 className="center-align">
-    No results
-    <span role="img" aria-label="Emoji">
-      😔
-    </span>
+    Nothing here, try other words to get schwifty !
   </h3>
 );
 

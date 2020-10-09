@@ -1,3 +1,8 @@
+.modal {
+  background-image: radial-gradient(teal, black);
+  border-radius: 25px;
+}
+
 .modal-close {
   margin-left: 97%;
 }

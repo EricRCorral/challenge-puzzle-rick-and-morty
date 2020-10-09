@@ -1,3 +1,9 @@
+.background-img {
+  background-image: url("assets/images/background.jpg");
+  background-repeat: round;
+  background-attachment: fixed;
+}
+
 .container {
   width: 95% !important;
   min-height: 94vh;
@@ -5,4 +11,8 @@
 
 .row {
   margin-bottom: 0px !important;
+}
+
+.text-whitesmoke {
+  color: #f5f5f5;
 }

@@ -1,5 +1,16 @@
-@media screen and (max-width: 600px) {
-    .filters {
-      text-align: center;
-    }
+.filters-title {
+  font-size: 32px;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 800px) {
+  .filters {
+    padding-left: 3% !important;
   }
+}
+
+@media screen and (max-width: 600px) {
+  .filters {
+    text-align: center;
+  }
+}
