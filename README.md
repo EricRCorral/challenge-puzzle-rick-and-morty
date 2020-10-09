@@ -6,13 +6,13 @@ At your left you have some filters to select what you want to search between cha
 
 ## Ready to get schwifty ?
 
-![Screenshot](./src/assets/images/Screenshots/screenshot-1.png)
-![Screenshot](./src/assets/images/Screenshots/screenshot-2.png)
-![Screenshot](./src/assets/images/Screenshots/screenshot-3.png)
-![Screenshot](./src/assets/images/Screenshots/screenshot-4.png)
-![Screenshot](./src/assets/images/Screenshots/screenshot-5.png)
-![Screenshot](./src/assets/images/Screenshots/screenshot-6.png)
-![Screenshot](./src/assets/images/Screenshots/screenshot-7.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-1.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-2.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-3.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-4.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-5.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-6.png)
+![Screenshot](./src/assets/images/Screenshots/Screenshot-7.png)
 
 ***
 
