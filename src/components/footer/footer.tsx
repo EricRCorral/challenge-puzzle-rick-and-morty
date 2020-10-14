@@ -14,7 +14,6 @@ const Footer = () => (
     >
       <img className="footer-img" src={ERIC} alt="Eric Corral" />
     </a>
-
     <div className="right">
       <strong>{DATE}</strong>
     </div>
