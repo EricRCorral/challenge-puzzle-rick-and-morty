@@ -102,15 +102,13 @@ const Cards = ({
   );
 };
 
-const mapStateToProps = (state: State) => {
-  return {
-    data: state.data,
-    searcherValue: state.searcherValue,
-    filter: state.filter,
-    fetching: state.fetching,
-    error: state.error,
-  };
-};
+const mapStateToProps = (state: State) => ({
+  data: state.data,
+  searcherValue: state.searcherValue,
+  filter: state.filter,
+  fetching: state.fetching,
+  error: state.error,
+});
 
 export default connect(mapStateToProps, {
   setCurrentCardAction,

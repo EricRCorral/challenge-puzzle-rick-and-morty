@@ -32,9 +32,8 @@ const Paginator = ({ data, page, filter, setPageAction }: State) => {
   const changePage = (page?: number) => {
     if (page === null) {
       return;
-    } else {
-      setPageAction(page);
     }
+    setPageAction(page);
   };
 
   return (
@@ -78,13 +77,11 @@ const Paginator = ({ data, page, filter, setPageAction }: State) => {
   );
 };
 
-const mapStateToProps = (state: State) => {
-  return {
-    data: state.data,
-    page: state.page,
-    filter: state.filter,
-  };
-};
+const mapStateToProps = (state: State) => ({
+  data: state.data,
+  page: state.page,
+  filter: state.filter,
+});
 
 export default connect(mapStateToProps, {
   setPageAction,

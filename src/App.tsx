@@ -31,10 +31,8 @@ const App = ({ searcherValue }: State) => (
   </>
 );
 
-const mapStateToProps = (state: State) => {
-  return {
-    searcherValue: state.searcherValue,
-  };
-};
+const mapStateToProps = (state: State) => ({
+  searcherValue: state.searcherValue,
+});
 
 export default connect(mapStateToProps)(App);
